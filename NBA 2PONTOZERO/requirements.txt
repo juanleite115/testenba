@@ -1,5 +1,0 @@
-pandas
-matplotlib
-seaborn
-nba_api
-openpyxl
