@@ -1,22 +1,27 @@
 from nba_api.stats.static import teams
-from nba_api.stats.endpoints import CommonTeamRoster, PlayerCareerStats, PlayerDashboardByGeneralSplits
+from nba_api.stats.endpoints import CommonTeamRoster, PlayerCareerStats, PlayerDashboardByGeneralSplits,PlayerDashboardByYearOverYear
 import pandas as pd
+import time
 
 # Buscar ID do time (ex: Miami)
+def nome_time():
+    nome = str(input("digite o nome do time: "))
+    return nome
+
 team_dict = teams.get_teams()
-miami_id = [team['id'] for team in team_dict if team['full_name'] == 'Miami Heat'][0]
+tome= nome_time()
+miami_id = [team['id'] for team in team_dict if team['full_name'] == tome][0]
 
 # Buscar elenco atual
 roster = CommonTeamRoster(team_id=miami_id).get_data_frames()[0]
 
-# Mostrar nomes e IDs dos jogadores
-players = roster[['PLAYER', 'PLAYER_ID']]
 #---------------------------------------------
 
-from nba_api.stats.endpoints import PlayerDashboardByYearOverYear
-import time
+
 def stats():
     all_stats = []
+    # Mostrar nomes e IDs dos jogadores
+    players = roster[['PLAYER', 'PLAYER_ID']]
 
     for _, row in players.iterrows():
         player_id = row['PLAYER_ID']
